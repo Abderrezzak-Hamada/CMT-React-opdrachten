@@ -1,40 +1,27 @@
-import { useState } from 'react';
+import { useState } from "react";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
 
-export default function App() {
-  // State voor het invoerveld
-  const [newTodo, setNewTodo] = useState('');
-  // State voor de lijst van To-Dos
+const App = () => {
+  const [inputValue, setInputValue] = useState("");
   const [todos, setTodos] = useState([]);
 
-  // Functie om een nieuw To-Do item toe te voegen
   const addTodo = () => {
-    if (newTodo.trim() === '') return; // lege items voorkomen
-    setTodos([...todos, newTodo]);
-    setNewTodo(''); // input leegmaken na toevoegen
-  };
-
-  // Functie om Enter te gebruiken in plaats van knop
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') addTodo();
+    if (inputValue.trim() === "") return;
+    setTodos([...todos, inputValue]);
+    setInputValue("");
   };
 
   return (
-    <div>
-      <h1>Mijn To-Do App</h1>
-      <input
-        type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-        onKeyDown={handleKeyPress}
-        placeholder="Voer een taak in"
+    <>
+      <TodoInput
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        addTodo={addTodo}
       />
-      <button onClick={addTodo}>Toevoegen</button>
-
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
-        ))}
-      </ul>
-    </div>
+      <TodoList todos={todos} />
+    </>
   );
-}
+};
+
+export default App;
