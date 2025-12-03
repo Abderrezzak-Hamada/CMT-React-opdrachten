@@ -4,13 +4,30 @@ import BookCounter from "./BookCounter";
 import BookData from '../data.js'
 
 function BookList() {
-  const [books] = useState(BookData);
+  const [books, setBooks] = useState(BookData);
   const [searchInput, setSearchInput] = useState('')
+
+  const handleChange = (e) => {
+  e.preventDefault();
+  setSearchInput(e.target.value);
+
+  const filteredBooks = BookData.filter((book) =>
+  book.title.toLowerCase().includes(searchInput.toLowerCase())
+   );
+   setBooks(filteredBooks);
+  }
+  
 
   return (
     <div className="book-list">
-      <div className="">
-
+      <div className='search'>
+        <input 
+        type="text" 
+        placeholder="zoek een titel op "
+        onChange ={handleChange}
+        value= {searchInput}
+        name='search'
+        />
       </div>
       <BookCounter aantal={books.length} />
       {books.map((book, index) => (
