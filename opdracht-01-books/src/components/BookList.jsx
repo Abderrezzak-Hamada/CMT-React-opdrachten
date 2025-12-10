@@ -7,6 +7,7 @@ function BookList() {
   const [books, setBooks] = useState(BookData);
   const [searchInput, setSearchInput] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Alle');
+  const [favorites, setFavorites] = useState([]);
 
   const categories = [
     'Alle',
@@ -14,8 +15,17 @@ function BookList() {
     'Avontuur',
     'Sciencefiction',
     'Thriller',
-    'Romance'
+    'Romance',
+    'Favorieten'
   ];
+
+  const toggleFavorite = (title) => {
+    if (favorites.includes(title)) {
+      setFavorites(favorites.filter(fav => fav !== title));
+    } else {
+      setFavorites([...favorites, title]);
+    }
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -30,6 +40,8 @@ function BookList() {
     const categoryFiltered =
       selectedCategory === 'Alle'
         ? filteredBooks
+        : selectedCategory === 'Favorieten'
+        ? filteredBooks.filter(book => favorites.includes(book.title))
         : filteredBooks.filter(book => book.category === selectedCategory);
 
     setBooks(categoryFiltered);
@@ -44,6 +56,14 @@ function BookList() {
         book.title.toLowerCase().includes(searchInput.toLowerCase())
       );
       setBooks(searchFiltered);
+
+    } else if (category === 'Favorieten') {
+      const favBooks = BookData.filter((book) =>
+        favorites.includes(book.title) &&
+        book.title.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      setBooks(favBooks);
+
     } else {
       const filtered = BookData.filter(
         (book) =>
@@ -90,6 +110,8 @@ function BookList() {
           author={book.author}
           image={book.image}
           category={book.category}
+          liked={favorites.includes(book.title)}
+          toggleFavorite={toggleFavorite}
         />
       ))}
     </div>
