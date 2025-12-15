@@ -1,32 +1,23 @@
 import { useState } from "react";
 
-function Book({
-  title,
-  author,
-  image,
-  category,
-  description,
-  year,
-  pages,
-  liked,
-  toggleFavorite
-}) {
+function Book({ title, author, image, category, description, year, pages }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [aantalKeerGelezen, setAantalKeerGelezen] = useState(0);
+  const [liked, setLiked] = useState(false); 
 
-  function handleFlip() {
+  const handleFlip = () => {
     setIsFlipped(!isFlipped);
-  }
+  };
 
-  function verhoogTeller(e) {
+  const verhoogTeller = (e) => {
     e.stopPropagation();
     setAantalKeerGelezen(aantalKeerGelezen + 1);
-  }
+  };
 
-  function handleFavoriteClick(e) {
+  const toggleLike = (e) => {
     e.stopPropagation(); 
-    toggleFavorite(title);
-  }
+    setLiked(!liked);
+  };
 
   return (
     <article
@@ -47,17 +38,12 @@ function Book({
           </button>
 
           <div className="favorite-section">
-            <button
-              className="favorite-button"
-              onClick={handleFavoriteClick}
-            >
+            <button className="favorite-button" onClick={toggleLike}>
               {liked ? "❤️" : "🤍"}
             </button>
 
             {liked && (
-              <p className="favorited-text">
-                Toegevoegd aan favorieten
-              </p>
+              <p className="favorited-text">Toegevoegd aan favorieten</p>
             )}
           </div>
         </div>
