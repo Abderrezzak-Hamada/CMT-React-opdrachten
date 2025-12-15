@@ -24,7 +24,7 @@ function Book({
   }
 
   function handleFavoriteClick(e) {
-    e.stopPropagation(); // 🔥 BELANGRIJK
+    e.stopPropagation(); 
     toggleFavorite(title);
   }
 
