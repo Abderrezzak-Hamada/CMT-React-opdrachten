@@ -1,0 +1,184 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: "Poppins", sans-serif;
+  background: #fdf6e3;
+  color: #111111;
+  line-height: 1.6;
+}
+
+/* App container */
+.app-container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 32px;
+}
+
+/* Dashboard grid */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+/* Card */
+.card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid #f0e5c9;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Full width card */
+.card-full {
+  grid-column: span 2;
+}
+
+/* Headings */
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #111111;
+  border-bottom: 3px solid #facc15;
+  padding-bottom: 8px;
+}
+
+/* Welcome box */
+.welcome {
+  background: #fff7d9;
+  color: #78350f;
+  padding: 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Opening hours grid */
+.opening-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.opening-item {
+  background: #fff4b8;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  color: #78350f;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.opening-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(250, 204, 21, 0.3);
+}
+
+/* Services list */
+.services-list li {
+  list-style: none;
+  background: #fff9e5;
+  border: 1px solid #facc15;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #111111;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.services-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(250, 204, 21, 0.25);
+}
+
+/* Labels */
+label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+  color: #111111;
+}
+
+/* Inputs & Select */
+input,
+select {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #f0e5c9;
+  background: #fffef6;
+  color: #111111;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #facc15;
+  box-shadow: 0 0 5px rgba(250, 204, 21, 0.5);
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  background: #facc15;
+  color: #111111;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  background: #eab308;
+}
+
+/* Error */
+.error {
+  background: #fdecea;
+  color: #991b1b;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .card-full {
+    grid-column: span 1;
+  }
+}
