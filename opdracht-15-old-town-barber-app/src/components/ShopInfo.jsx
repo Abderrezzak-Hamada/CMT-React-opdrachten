@@ -1,61 +1,41 @@
-const ShopInfo = () => {
-  const shop = {
-    name: "Old Town Barber",
-    openingHours: {
-      monday: "09:00 - 18:00",
-      tuesday: "09:00 - 18:00",
-      wednesday: "09:00 - 18:00",
-      thursday: "09:00 - 20:00",
-      friday: "09:00 - 20:00",
-      saturday: "10:00 - 16:00",
-      sunday: "Gesloten",
-    },
-    services: [
-      {
-        id: 1,
-        name: "Heren Knipbeurt",
-        price: 25,
-        duration: 30,
-      },
-      {
-        id: 2,
-        name: "Baard Trim",
-        price: 15,
-        duration: 15,
-      },
-      {
-        id: 3,
-        name: "Knipbeurt + Baard",
-        price: 35,
-        duration: 45,
-      },
-    ],
-  };
+export const services = [
+  { name: 'Haircut', price: 25, duration: 30 },
+  { name: 'Beard Trim', price: 15, duration: 20 },
+  { name: 'Hair & Beard', price: 35, duration: 45 }
+]
 
+// Openingstijden per dag
+const openingHours = {
+  maandag: '09:00 - 18:00',
+  dinsdag: '09:00 - 18:00',
+  woensdag: '09:00 - 18:00',
+  donderdag: '09:00 - 18:00',
+  vrijdag: '09:00 - 18:00',
+  zaterdag: '09:00 - 18:00',
+  zondag: 'Gesloten'
+}
+
+export default function ShopInfo() {
   return (
-    <div>
-      <h2>{shop.name}</h2>
-
-      <h3>Openingstijden</h3>
+    <section>
+      <h2>Old School Barber</h2>
+      <h3>Openingstijden:</h3>
       <ul>
-        {Object.entries(shop.openingHours).map(([day, hours]) => (
+        {Object.entries(openingHours).map(([day, hours]) => (
           <li key={day}>
-            <strong>{day}:</strong> {hours}
+            {day.charAt(0).toUpperCase() + day.slice(1)}: {hours}
           </li>
         ))}
       </ul>
 
-      <h3>Services</h3>
+      <h3>Diensten:</h3>
       <ul>
-        {shop.services.map((service) => (
-          <li key={service.id}>
-            <strong>{service.name}</strong> – €{service.price} (
-            {service.duration} min)
+        {services.map(service => (
+          <li key={service.name}>
+            {service.name} – €{service.price} ({service.duration} min)
           </li>
         ))}
       </ul>
-    </div>
-  );
-};
-
-export default ShopInfo;
+    </section>
+  )
+}

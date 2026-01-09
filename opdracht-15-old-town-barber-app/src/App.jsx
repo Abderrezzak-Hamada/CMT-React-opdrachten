@@ -1,40 +1,53 @@
-import { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import UserProfile from './components/UserProfile';
-import { getUserProfile, setUserProfile } from './utils/localStorage.js';
- 
-function App() {
-  const [profile, setProfile] = useState(null);
- 
+import { ToastContainer } from 'react-toastify'
+import UserProfile from './components/UserProfile'
+import ShopInfo from './components/ShopInfo'
+import BookingForm from './components/BookingForm'
+import BookingsList from './components/BookingsList'
+import { getUserProfile, getAppointments, saveAppointments } from './utils/localStorage'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
+
+export default function App() {
+  const user = getUserProfile()
+
+  // 15 minuten reminder
   useEffect(() => {
-    const savedProfile = getUserProfile();
-    setProfile(savedProfile);
-  }, []);
- 
-  const handleSave = (profileData) => {
-    setUserProfile(profileData);
-    setProfile(profileData);
-    toast.success('Profiel is aangemaakt');
-  };
- 
+    const interval = setInterval(() => {
+      const appointments = getAppointments()
+      const now = new Date()
+
+      const updated = appointments.map(a => {
+        const time = new Date(`${a.date} ${a.time}`)
+        const diff = (time - now) / 60000
+
+        if (diff > 0 && diff <= 15 && !a.reminded) {
+          toast.info(`Reminder: ${a.serviceName} om ${a.time}`)
+          return { ...a, reminded: true }
+        }
+        return a
+      })
+
+      saveAppointments(updated)
+    }, 60000)
+
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar={false}
-      />
-      
-      {!profile ? (
-        <UserProfile saveProfile={handleSave} />
-      ) : (
-        <section>
-          <h1>shopinfo</h1>
-        </section>
+    <div className="app">
+      <h1>Barber Booking</h1>
+
+      {!user && <UserProfile />}
+
+      {user && (
+        <>
+          <ShopInfo />
+          <BookingForm />
+          <BookingsList />
+        </>
       )}
-    </>
-  );
+
+      <ToastContainer />
+    </div>
+  )
 }
- 
-export default App;

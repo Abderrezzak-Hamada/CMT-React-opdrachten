@@ -1,54 +1,56 @@
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+import { getUserProfile, saveUserProfile } from '../utils/localStorage'
 
- 
-import { useState } from 'react';
-import { toast } from 'react-toastify';
- 
-const UserProfile = ({saveProfile}) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
- 
-  const handleSubmit = (e) => {
+export default function UserProfile() {
+  const storedProfile = getUserProfile()
+
+  const [form, setForm] = useState({
+    name: storedProfile?.name || '',
+    email: storedProfile?.email || '',
+    phone: storedProfile?.phone || ''
+  })
+
+  const handleSubmit = e => {
     e.preventDefault()
- 
-    if(!name.trim() || !email.trim() || !phone.trim()){
-      toast.error("Vul alle velden in!");
-      return;
+    if (!form.name || !form.email || !form.phone) {
+      toast.error('Alle velden zijn verplicht')
+      return
     }
- 
-    saveProfile({name, email, phone})
+    saveUserProfile(form)
+    toast.success('Profiel opgeslagen')
   }
- 
+
   return (
     <section>
-      <h2>Jouw profiel</h2>
+      <h2>Mijn profiel</h2>
+
       <form onSubmit={handleSubmit}>
         <input
-          type='text'
-          placeholder='naam'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
- 
-        <input
-          type='text'
-          placeholder='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Naam"
+          value={form.name}
+          onChange={e => setForm({ ...form, name: e.target.value })}
         />
         <input
-          type='text'
-          placeholder='telefoon'
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Email"
+          value={form.email}
+          onChange={e => setForm({ ...form, email: e.target.value })}
         />
- 
-        <button type='submit'>Profiel aanmaken</button>
+        <input
+          placeholder="Telefoon"
+          value={form.phone}
+          onChange={e => setForm({ ...form, phone: e.target.value })}
+        />
+        <button>Opslaan</button>
       </form>
+
+      {form.name && form.email && form.phone && (
+        <div style={{ marginTop: '1rem' }}>
+          <p><strong>Naam:</strong> {form.name}</p>
+          <p><strong>Email:</strong> {form.email}</p>
+          <p><strong>Telefoon:</strong> {form.phone}</p>
+        </div>
+      )}
     </section>
-  );
-};
- 
-export default UserProfile;
- 
- 
+  )
+}
